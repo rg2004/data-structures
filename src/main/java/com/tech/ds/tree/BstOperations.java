@@ -1,6 +1,9 @@
 package com.tech.ds.tree;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
 
 public class BstOperations {
 
@@ -168,4 +171,71 @@ public class BstOperations {
 		return rightLCA;
 	}
 	
+   public void printLevelByLevel(Node root){
+		
+		if(root==null) {
+			return;
+		}
+		
+		Queue<Node> q = new LinkedList();
+
+		q.add(root);
+		
+		while(!q.isEmpty()) {
+			
+			Node current = q.poll();
+			
+			System.out.print(current.getData()+" ");
+			
+			if(current.getLeftChild()!=null)
+				q.add(current.getLeftChild());
+			
+			if(current.getRightChild()!=null)
+				q.add(current.getRightChild());
+		  }
+			
+		}
+	
+		public  void insert(Node<Integer> node,Node<Integer> head) {
+			
+			if(head==null) {
+				head=node;
+			}
+			else if(node.getData() <head.getData()) {
+				if(head.getLeftChild()==null)
+				{
+					head.setLeftChild(node);
+				}
+				 else {
+				  insert(node,head.getLeftChild());
+				}
+			}
+			else if(node.getData() >head.getData()) {
+				if(head.getRightChild()==null)
+				{
+					head.setRightChild(node);
+				}
+				 else {
+				  insert(node,head.getRightChild());
+				}
+			}
+			
+		}
+
+		
+		public int depth(Node root) {
+			
+			if(root==null)
+				return 0;
+			
+			int left = depth(root.getLeftChild());
+			int right =depth(root.getRightChild());
+			
+			if(left>right){
+				return 1+left;
+			}
+			else{
+				return 1+right;
+			}	        
+		}
 }

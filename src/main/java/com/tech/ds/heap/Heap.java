@@ -16,6 +16,13 @@ public abstract class Heap<T extends Comparable> {
 		array = (T[]) Array.newInstance(clazz, size);
 	}
 	
+	public int getParentIndex(int index) {
+		if(index < 0 || index > count) {
+			return -1;
+		}
+		return (index -1)/2;
+	}
+	
 	public int getLeftChildIndex(int index) {
 		
 		int leftChildIndex = index*2+1;
@@ -24,7 +31,7 @@ public abstract class Heap<T extends Comparable> {
 		}
 		return leftChildIndex;
 	}
-    public int geRightChildIndex(int index) {
+    public int getRightChildIndex(int index) {
 		
 		int rightChildIndex = index*2+2;
 		if(rightChildIndex >=count ) {
@@ -55,4 +62,31 @@ public abstract class Heap<T extends Comparable> {
     public T getElementAtIndex(int index) {
     	return array[index];
     }
+    
+    protected void swap(int index1,int index2) {
+    	T tempValue = array[index1];
+    	array[index2]=array[index1];
+    	array[index1]=tempValue;
+    }
+    
+	public void insert(T value) {
+		if (count > array.length) {
+			// throw Exception
+		}
+		array[count] = value;
+		siftUp(count);
+		count++;
+	}
+	
+	public T removeHighestPriority() {
+		T min = array[0];
+		array[0] = array[count-1];
+		count--;
+		siftDown(0);
+		return min;
+	}
+
+	protected abstract void siftDown(int index);
+
+	protected abstract void siftUp(int index);
 }
